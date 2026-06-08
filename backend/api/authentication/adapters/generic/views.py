@@ -94,7 +94,14 @@ class GenericOpenIDConnectAdapter(OAuth2Adapter):
 
     def _process_id_token(self, id_token, app, expected_nonce=None):
         try:
-            jwk_client = jwt.PyJWKClient(self.jwks_url)
+            # PyJWKClient fetches the JWKS via urllib, which defaults to a
+            # "Python-urllib/x.y" User-Agent. Some WAFs / bot-protection (e.g.
+            # Cloudflare Bot Fight Mode) 403 that UA, breaking id_token signature
+            # verification even though discovery/userinfo (via requests) succeed.
+            # Send an explicit, non-bot User-Agent so the JWKS fetch isn't blocked.
+            jwk_client = jwt.PyJWKClient(
+                self.jwks_url, headers={"User-Agent": "phase-console"}
+            )
             signing_key = jwk_client.get_signing_key_from_jwt(id_token)
             claims = jwt.decode(
                 id_token,
