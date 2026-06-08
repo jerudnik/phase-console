@@ -335,7 +335,7 @@ class TestCompleteLogin(unittest.TestCase):
         )
 
         # Assert: PyJWKClient was used and JWT was decoded
-        mock_jwk_client_cls.assert_called_once_with(f"{AUTHELIA_BASE_URL}/jwks.json")
+        mock_jwk_client_cls.assert_called_once_with(f"{AUTHELIA_BASE_URL}/jwks.json", headers={"User-Agent": "phase-console"})
         mock_jwt_decode.assert_called_once_with(
             fake_id_token_jwt,
             key="mock-key",
@@ -556,7 +556,7 @@ class TestProcessIdToken(unittest.TestCase):
         result = adapter._process_id_token(fake_jwt, app)
 
         # Assert
-        mock_jwk_client_cls.assert_called_once_with(f"{AUTHELIA_BASE_URL}/jwks.json")
+        mock_jwk_client_cls.assert_called_once_with(f"{AUTHELIA_BASE_URL}/jwks.json", headers={"User-Agent": "phase-console"})
         mock_jwk_client.get_signing_key_from_jwt.assert_called_once_with(fake_jwt)
         mock_jwt_decode.assert_called_once_with(
             fake_jwt,
