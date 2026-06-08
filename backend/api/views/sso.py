@@ -256,6 +256,13 @@ def _build_provider_registry():
             "provider_id": "authelia",
             "token_auth_method": "client_secret_post",
         },
+        "kanidm": {
+            "issuer": os.getenv("KANIDM_URL", ""),
+            "adapter_module": "api.authentication.providers.kanidm.views",
+            "adapter_class": "KanidmOpenIDConnectAdapter",
+            "provider_id": "kanidm",
+            "token_auth_method": "client_secret_post",
+        },
         "okta-oidc": {
             "issuer": os.getenv("OKTA_OIDC_ISSUER", ""),
             "adapter_module": "ee.authentication.sso.oidc.okta.views",
@@ -272,6 +279,7 @@ def _build_provider_registry():
             "entra-id-oidc": "microsoft",
             "authentik": "authentik",
             "authelia": "authelia",
+            "kanidm": "kanidm",
             "okta-oidc": "okta-oidc",
         }
         settings_key = settings_key_map.get(slug, slug)

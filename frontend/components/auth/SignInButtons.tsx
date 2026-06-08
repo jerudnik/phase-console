@@ -13,6 +13,7 @@ import {
   EntraIDLogo,
   AuthentikLogo,
   OktaLogo,
+  KanidmLogo,
 } from '../common/logos'
 import { SiAuthelia } from 'react-icons/si'
 import { toast } from 'react-toastify'
@@ -60,6 +61,7 @@ const providerButtons: ProviderButton[] = [
   { id: 'github-enterprise', name: 'GitHub Enterprise', icon: GitHubLogo },
   { id: 'authentik', name: 'Authentik', icon: AuthentikLogo },
   { id: 'authelia', name: 'Authelia', icon: SiAuthelia },
+  { id: 'kanidm', name: 'Kanidm', icon: KanidmLogo },
   { id: 'okta-oidc', name: 'Okta', icon: OktaLogo },
 ]
 
